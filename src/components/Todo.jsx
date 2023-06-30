@@ -17,7 +17,7 @@ export default function Todo({ task, toggleComplete, deleteTodo, editTodo }) {
 }
 
 Todo.propTypes = {
-    task: PropTypes.string,
+    task: PropTypes.object,
     toggleComplete: PropTypes.func,
     deleteTodo: PropTypes.func,
     editTodo: PropTypes.func,
