@@ -31,5 +31,5 @@ export default function EditTodoForm({editTodo, task}) {
 
 EditTodoForm.propTypes = {
     editTodo: PropTypes.func,
-    task: PropTypes.string,
+    task: PropTypes.object
 }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import TodoForm from "./TodoForm";
 import Todo from "./Todo";
@@ -6,11 +6,25 @@ import EditTodoForm from "./EditTodoForm";
 uuidv4();
 
 export default function TodoWrapper() {
-
     const [todos, setTodos] = useState([]);
 
+    // Load todos from localStorage on component mount
+    useEffect(() => {
+        const storedTodos = localStorage.getItem("todos");
+        if (storedTodos) {
+            setTodos(JSON.parse(storedTodos));
+        }
+    }, []);
+
+    // Save todos to localStorage whenever todos change
+    useEffect(() => {
+        localStorage.setItem("todos", JSON.stringify(todos));
+    }, [todos]);
+
     const addTodo = (todo) => {
-        setTodos([...todos, { id: uuidv4(), task: todo, completed: false, isEditing: false }]);
+        const newTodo = { id: uuidv4(), task: todo, completed: false, isEditing: false };
+        setTodos([...todos, newTodo]);
+        console.log(`task id: ${newTodo.id}, task name: ${newTodo.task}`);
     };
 
     const toggleComplete = (id) => {
