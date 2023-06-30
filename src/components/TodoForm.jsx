@@ -1,14 +1,23 @@
 import { useState } from "react";
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
+import Swal from "sweetalert2";
 
-
-export default function TodoForm({addTodo}) {
+export default function TodoForm({ addTodo }) {
     const [value, setValue] = useState("");
 
     const handleSubmit = (e) => {
-        e.preventDefault();  
-        addTodo(value)
-        setValue("")
+        e.preventDefault();
+        if (value === "") {
+            Swal.fire({
+                title: "No Text Inserted",
+                icon: "warning",
+                showCancelButton: false,
+                confirmButtonText: "OK",
+            });
+        } else {
+            addTodo(value);
+            setValue("");
+        }
     };
 
     return (
@@ -17,7 +26,7 @@ export default function TodoForm({addTodo}) {
                 type="text"
                 className="todo-input"
                 value={value}
-                placeholder="what is the task today?"
+                placeholder="What is the task today?"
                 onChange={(e) => {
                     setValue(e.target.value);
                 }}
@@ -30,5 +39,5 @@ export default function TodoForm({addTodo}) {
 }
 
 TodoForm.propTypes = {
-    addTodo: PropTypes.func
-}
+    addTodo: PropTypes.func,
+};

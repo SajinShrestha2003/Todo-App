@@ -1,20 +1,27 @@
 import { useState, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
 import TodoForm from "./TodoForm";
 import Todo from "./Todo";
 import EditTodoForm from "./EditTodoForm";
-uuidv4();
 
 export default function TodoWrapper() {
-    const [todos, setTodos] = useState([]);
+    // function to get random id//
+    const uid = function () {
+        let timestampID = Date.now().toString(36);
+        let randomID = Math.floor(Math.random() * 9e11).toString(36);
+        return timestampID + randomID;
+    };
 
-    // Load todos from localStorage on component mount
-    useEffect(() => {
-        const storedTodos = localStorage.getItem("todos");
+    //function to store todos in local storage//
+    const getLocalStorage = () => {
+        let storedTodos = localStorage.getItem("todos");
         if (storedTodos) {
-            setTodos(JSON.parse(storedTodos));
+            return (storedTodos = JSON.parse(localStorage.getItem("todos")));
+        } else {
+            return [];
         }
-    }, []);
+    };
+
+    const [todos, setTodos] = useState(getLocalStorage());
 
     // Save todos to localStorage whenever todos change
     useEffect(() => {
@@ -22,7 +29,7 @@ export default function TodoWrapper() {
     }, [todos]);
 
     const addTodo = (todo) => {
-        const newTodo = { id: uuidv4(), task: todo, completed: false, isEditing: false };
+        const newTodo = { id: uid(), task: todo, completed: false, isEditing: false };
         setTodos([...todos, newTodo]);
         console.log(`task id: ${newTodo.id}, task name: ${newTodo.task}`);
     };
@@ -45,7 +52,7 @@ export default function TodoWrapper() {
 
     return (
         <div className="TodoWrapper">
-            <h1>Get Things Done!</h1>
+            <h1>To-DO List</h1>
             <TodoForm addTodo={addTodo} />
 
             {todos.map((todo, index) =>

@@ -25,7 +25,7 @@ h1 {
 }
 
 .TodoWrapper {
-  background: #1A1A40;
+  background: #362B48;
   margin-top: 5rem;
   padding: 2rem;
   border-radius: 5px;
@@ -76,7 +76,6 @@ h1 {
 }
 
 .completed {
-  color: #c5aeff;
+  color: #362B48;
   text-decoration: line-through;
 }
- 
