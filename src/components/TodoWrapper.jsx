@@ -28,8 +28,8 @@ export default function TodoWrapper() {
         localStorage.setItem("todos", JSON.stringify(todos));
     }, [todos]);
 
-    const addTodo = (todo) => {
-        const newTodo = { id: uid(), task: todo, completed: false, isEditing: false };
+    const addTodo = (value) => {
+        const newTodo = { id: uid(), task: value, completed: false, isEditing: false };
         setTodos([...todos, newTodo]);
         console.log(`task id: ${newTodo.id}, task name: ${newTodo.task}`);
     };
@@ -55,11 +55,11 @@ export default function TodoWrapper() {
             <h1>To-DO List</h1>
             <TodoForm addTodo={addTodo} />
 
-            {todos.map((todo, index) =>
-                todo.isEditing ? (
-                    <EditTodoForm key={index} editTodo={editTask} task={todo} />
+            {todos.map((task, index) =>
+                task.isEditing ? (
+                    <EditTodoForm key={index} editTodo={editTask} task={task} />
                 ) : (
-                    <Todo task={todo} key={index} toggleComplete={toggleComplete} deleteTodo={deleteTodo} editTodo={editTodo} />
+                    <Todo task={task} key={index} toggleComplete={toggleComplete} deleteTodo={deleteTodo} editTodo={editTodo} />
                 )
             )}
         </div>
